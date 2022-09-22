@@ -1,0 +1,135 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://MalePlayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Level1Map.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemy/Redenemy.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Level1.gd" type="Script" id=4]
+[ext_resource path="res://assets/wav-short-loopable-background-music/wav-short-loopable-background-music/Magical Forest.wav" type="AudioStream" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 66.5, 58 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "NextSceen"
+tracks/0/type = "value"
+tracks/0/path = NodePath("MalePlayer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("MalePlayer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Level1" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="WhiteBackground" type="ColorRect" parent="."]
+margin_left = -358.0
+margin_top = -823.0
+margin_right = 1156.0
+margin_bottom = 798.0
+
+[node name="Level1Map" parent="." instance=ExtResource( 2 )]
+position = Vector2( 24, 7 )
+
+[node name="MalePlayer" parent="." instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 1 )
+position = Vector2( -82, 484 )
+z_index = 20
+
+[node name="Camera2D" type="Camera2D" parent="MalePlayer"]
+current = true
+limit_left = -190
+limit_top = -800
+limit_right = 1100
+limit_bottom = 750
+limit_smoothed = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.3
+drag_margin_top = 0.3
+drag_margin_right = 0.3
+drag_margin_bottom = 0.3
+
+[node name="RedEnemy" type="Node2D" parent="."]
+position = Vector2( 200, 0 )
+
+[node name="Red1" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 274, 94 )
+motion/sync_to_physics = true
+
+[node name="Red2" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 665, 419 )
+motion/sync_to_physics = true
+
+[node name="Red3" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 500, 96 )
+motion/sync_to_physics = true
+f = true
+
+[node name="Red4" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( -5, -262 )
+motion/sync_to_physics = true
+
+[node name="Red5" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 455, -154 )
+motion/sync_to_physics = true
+f = true
+
+[node name="Red6" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 457, -494 )
+motion/sync_to_physics = true
+
+[node name="Red7" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 214, -432 )
+motion/sync_to_physics = true
+f = true
+
+[node name="Red8" parent="RedEnemy" instance=ExtResource( 3 )]
+position = Vector2( 47, -481 )
+motion/sync_to_physics = true
+
+[node name="NextSceen" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NextSceen"]
+position = Vector2( -101.5, -700 )
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/NextSceen = SubResource( 2 )
+anims/RESET = SubResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -30.0
+autoplay = true
+
+[connection signal="heal" from="Level1Map" to="MalePlayer" method="_on_Level1Map_heal"]
+[connection signal="fadeout" from="MalePlayer" to="Level1Map" method="_on_MalePlayer_fadeout"]
+[connection signal="fadeout" from="MalePlayer" to="RedEnemy/Red1" method="_on_MalePlayer_fadeout"]
+[connection signal="fadeout" from="MalePlayer" to="RedEnemy/Red2" method="_on_MalePlayer_fadeout"]
+[connection signal="fadeout" from="MalePlayer" to="RedEnemy/Red3" method="_on_MalePlayer_fadeout"]
+[connection signal="heals" from="MalePlayer" to="Level1Map" method="_on_MalePlayer_heals"]
+[connection signal="body_entered" from="NextSceen" to="." method="_on_NextSceen_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
