@@ -17,3 +17,7 @@ Steps to run the program:
 2. Download this whole folder and download *forestry* zip file 
 3. Extract *forestry* zip file at the folder that you downloaded just now
 4. Open Godot and click "Import" to import the file (It's in the folder).
+
+---------------------------------------------------------------------------------------------------
+
+Game website: https://zengchai.itch.io/forestry
