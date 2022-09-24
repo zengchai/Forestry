@@ -7,7 +7,7 @@ Language used: GDScript
 Software used: Godot
 
 Develop a 2D RPG game.The requirements:
--Using Godot
+- Using Godot
 
 ---------------------------------------------------------------------------------------------------
 
